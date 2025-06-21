@@ -9,9 +9,9 @@ pub enum Owner {
     Invader,
 }
 
-pub struct Projectile {
+pub struct Projectile<'a> {
     pub position: Position,
     pub owner: Owner,
     pub velocity: i16,
-    pub sprite: Sprite,
+    pub sprite: &'a mut Sprite,
 }

@@ -12,10 +12,10 @@ pub enum EnemyType {
     Gamma(u8),
 }
 
-pub struct Invader {
+pub struct Invader<'a> {
     pub position: Position,
     pub r#type: EnemyType,
     pub health: u8,
     pub alive: bool,
-    pub sprite: Sprite,
+    pub sprite: &'a mut Sprite,
 }

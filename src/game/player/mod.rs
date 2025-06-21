@@ -4,8 +4,8 @@ mod tests;
 use super::Position;
 use crate::sprite::Sprite;
 
-pub struct Player {
+pub struct Player<'a> {
     pub position: Position,
     pub lives: u8,
-    pub sprite: Sprite,
+    pub sprite: &'a mut Sprite,
 }

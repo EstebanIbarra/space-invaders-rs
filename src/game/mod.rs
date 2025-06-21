@@ -24,8 +24,8 @@ pub struct Game<'a> {
     pub score: usize,
     pub level: u16,
     pub tick_count: usize,
-    pub player: &'a mut Player,
-    pub invaders: Vec<&'a mut Invader>,
-    pub projectiles: Vec<&'a mut Projectile>,
-    pub obstacles: Vec<&'a mut Obstacle>,
+    pub player: &'a mut Player<'a>,
+    pub invaders: Vec<&'a mut Invader<'a>>,
+    pub projectiles: Vec<&'a mut Projectile<'a>>,
+    pub obstacles: Vec<&'a mut Obstacle<'a>>,
 }
