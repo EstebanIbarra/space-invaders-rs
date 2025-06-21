@@ -1,21 +1,16 @@
-use crossterm::event;
-use crossterm::event::Event;
-use space_invaders::game::Game;
+mod terminal;
+use std::error::Error;
 use std::io::Result;
-use std::thread::sleep;
-use std::time::Duration;
+use std::result::Result as StdResult;
+
+fn setup() -> StdResult<terminal::Guard, Box<dyn Error>> {
+    terminal::Guard::new()
+}
 
 fn main() -> Result<()> {
-    let mut game = Game::new()?;
-    loop {
-        if event::poll(Duration::from_millis(100))? {
-            let key = event::read()?;
-            if let Event::Key(key) = key {
-                game.handle_input(key);
-            }
-        }
-        game.update();
-        game.draw();
-        sleep(Duration::from_millis(16));
+    let term = setup();
+    if let Err(e) = term {
+        panic!("Couldn't create a Terminal Guard: {}", e);
     }
+    Ok(())
 }
