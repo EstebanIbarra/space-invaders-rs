@@ -5,6 +5,7 @@ pub mod invader;
 pub mod obstacle;
 pub mod player;
 pub mod projectile;
+pub mod shield;
 
 use invader::Invader;
 use obstacle::Obstacle;
@@ -19,11 +20,17 @@ pub enum State {
     GameOver,
 }
 
+pub struct Screen {
+    pub width: usize,
+    pub height: usize,
+}
+
 pub struct Game<'a> {
     pub state: State,
     pub score: usize,
     pub level: u16,
-    pub tick_count: usize,
+    pub tick: usize,
+    pub screen: &'a mut Screen,
     pub player: &'a mut Player<'a>,
     pub invaders: Vec<&'a mut Invader<'a>>,
     pub projectiles: Vec<&'a mut Projectile<'a>>,
