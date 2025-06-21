@@ -1,15 +1,19 @@
 #[cfg(test)]
 mod tests;
 
+pub type UnicodeMatrix = Vec<Vec<u32>>;
+pub type CharMatrix = Vec<Vec<char>>;
+
 pub struct Sprite {
     pub width: usize,
     pub height: usize,
-    pub data: Vec<Vec<char>>,
+    pub scale: f32,
+    pub data: CharMatrix,
 }
 
-impl Sprite {
-    pub fn new(matrix: Vec<Vec<u32>>, scale: f32) -> Self {
-        let char_matrix: Vec<Vec<char>> = matrix
+impl From<(UnicodeMatrix, f32)> for Sprite {
+    fn from((matrix, scale): (UnicodeMatrix, f32)) -> Sprite {
+        let char_matrix: CharMatrix = matrix
             .into_iter()
             .map(|row| {
                 row.into_iter()
@@ -29,7 +33,17 @@ impl Sprite {
         Sprite {
             width,
             height,
+            scale,
             data,
         }
+    }
+}
+
+impl Sprite {
+    pub fn update(&mut self, matrix: UnicodeMatrix) {
+        let new: Sprite = (matrix, self.scale).into();
+        self.width = new.width;
+        self.height = new.height;
+        self.data = new.data;
     }
 }
