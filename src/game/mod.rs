@@ -1,46 +1,31 @@
-use crossterm::cursor::Hide;
-use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, KeyEventState, KeyModifiers};
-use crossterm::terminal;
-use crossterm::terminal::{Clear, ClearType};
-use crossterm::ExecutableCommand;
-use std::io::{stdout, Result, Stdout};
+#[cfg(test)]
+mod tests;
 
-#[allow(dead_code)]
-pub struct Game {
-    stdout: Stdout,
+pub mod invader;
+pub mod obstacle;
+pub mod player;
+pub mod projectile;
+
+use invader::Invader;
+use obstacle::Obstacle;
+use player::Player;
+use projectile::Projectile;
+
+pub type Position = (usize, usize);
+
+pub enum State {
+    Start,
+    Playing,
+    GameOver,
 }
 
-impl Game {
-    pub fn new() -> Result<Self> {
-        let mut stdout = stdout();
-        terminal::enable_raw_mode()?;
-        stdout.execute(Clear(ClearType::All))?;
-        stdout.execute(Hide)?;
-        Ok(Game { stdout })
-    }
-
-    pub fn handle_input(&mut self, key: KeyEvent) {
-        match key {
-            KeyEvent {
-                kind: KeyEventKind::Press,
-                state: KeyEventState::NONE,
-                code: KeyCode::Esc,
-                modifiers: KeyModifiers::NONE,
-            } => {
-                println!("Quitting");
-                std::process::exit(0);
-            }
-            _ => {
-                println!("Unhandled key: {:?}", key);
-            }
-        }
-    }
-
-    pub fn update(&mut self) {
-        println!("Updating");
-    }
-
-    pub fn draw(&mut self) {
-        println!("Drawing");
-    }
+pub struct Game<'a> {
+    pub state: State,
+    pub score: usize,
+    pub level: u16,
+    pub tick_count: usize,
+    pub player: &'a mut Player,
+    pub invaders: Vec<&'a mut Invader>,
+    pub projectiles: Vec<&'a mut Projectile>,
+    pub obstacles: Vec<&'a mut Obstacle>,
 }
