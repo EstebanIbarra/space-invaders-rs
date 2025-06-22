@@ -2,17 +2,16 @@
 mod tests;
 
 use super::shield::Shield;
-use super::Position;
-use crate::sprite::{Sprite, UnicodeMatrix};
+use super::{Position, Sprite};
 
-pub struct Player<'a> {
+pub struct Player {
     pub position: Position,
     pub lives: u8,
-    pub shield: &'a mut Shield<'a>,
-    pub sprite: &'a mut Sprite,
+    pub shield: Shield,
+    pub sprite: Sprite,
 }
 
-pub const PLAYER: UnicodeMatrix = [
-    [0x20, 0x2584, 0x20, 0x20],       //  ▄  Filler:
-    [0x259F, 0x2580, 0x2599, 0x2580], // ▟▀▙ Filler: ▀
+pub const SKIN_A: Sprite = [
+    ['\u{0020}', '\u{2584}', '\u{0020}'], //  ▄
+    ['\u{259F}', '\u{2580}', '\u{2599}'], // ▟▀▙
 ];
