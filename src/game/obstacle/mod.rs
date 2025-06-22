@@ -1,17 +1,16 @@
 #[cfg(test)]
 mod tests;
 
-use super::Position;
-use crate::sprite::{Sprite, UnicodeMatrix};
+use super::{Position, Sprite};
 
-pub struct Obstacle<'a> {
+pub struct Obstacle {
     pub position: Position,
     pub max_health: u8,
     pub health: u8,
-    pub sprite: &'a mut Sprite,
+    pub sprite: Sprite,
 }
 
-pub const OBSTACLE: UnicodeMatrix = [
-    [0x2597, 0x2586, 0x2596, 0x2586], // ▗▆▖ Filler: ▆
-    [0x259F, 0x2580, 0x2599, 0x2580], // █▀█ Filler: ▀
+pub const OBSTACLE: Sprite = [
+    ['\u{2597}', '\u{2586}', '\u{2596}'], // ▗▆▖
+    ['\u{259F}', '\u{2580}', '\u{2599}'], // █▀█
 ];
