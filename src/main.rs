@@ -12,5 +12,6 @@ fn main() -> Result<()> {
     if let Err(e) = term {
         panic!("Couldn't create a Terminal Guard: {}", e);
     }
+    let _term = term.unwrap();
     Ok(())
 }
