@@ -4,7 +4,7 @@ mod tests;
 use super::shield::*;
 use super::{DifficultyLevel, Owner, Position, Screen, SetSprite, Sprite, NO_SPRITE};
 
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 pub enum InvaderType {
     None,
     Alpha,
@@ -13,6 +13,7 @@ pub enum InvaderType {
     Gamma,
 }
 
+#[derive(Debug, PartialEq)]
 pub struct Invader {
     pub position: Position,
     pub r#type: InvaderType,
@@ -36,11 +37,14 @@ impl SetSprite for Invader {
 
 impl Invader {
     pub fn new(
-        position: Position,
+        mut position: Position,
         shield_type: ShieldType,
         r#type: InvaderType,
         mut health: u8,
     ) -> Invader {
+        if position.1 < 2 {
+            position.1 += 2;
+        }
         let shield = Shield::new((position.0, position.1 - 2), shield_type, Owner::Invader);
         health = match r#type {
             InvaderType::None => 0,
